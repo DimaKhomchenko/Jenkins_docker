@@ -11,7 +11,7 @@ pipeline {
                 git 'https://github.com/DimaKhomchenko/boxfuse.git'
             }
         }
-        
+
         stage('build webApp'){
             steps {
                 sh 'mvn package'
@@ -20,7 +20,7 @@ pipeline {
 
         stage('build dockerImage'){
             steps {
-                sh 'cp ./deploy/Dockerfile .'
+                sh 'cp /home/user/deploy/Dockerfile .'
                 script{
                     docker.build registry + ":$BUILD_NUMBER"
                 }
