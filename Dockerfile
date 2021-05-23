@@ -4,3 +4,4 @@ WORKDIR /home/user/build
 COPY ./deploy/Dockerfile /home/user/deploy/Dockerfile
 ADD /home/dima/.ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa
+
