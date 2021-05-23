@@ -4,7 +4,7 @@ pipeline {
         registryCredential = 'dockerhub'
     }
     agent { 
-        dockerfile { args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' }   
+        dockerfile { args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock' }   
     }
 
     stages {
