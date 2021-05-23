@@ -2,6 +2,7 @@ pipeline {
     environment {
         registry = 'dimakhomchenko/jenkins_test'
         registryCredential = 'dockerhub'
+        dockerImage = ''
     }
     agent { 
         dockerfile { args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock' }   
@@ -24,9 +25,18 @@ pipeline {
             steps {
                 sh 'cp /home/user/deploy/Dockerfile .'
                 script{
-                    docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":deploy"
                 }
                 
+            }
+        }
+        stage('push image to dockerhub'){
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ){
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
