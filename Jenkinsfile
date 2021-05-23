@@ -40,7 +40,6 @@ pipeline {
         }
         stage('run image on remote host'){
             steps {
-                sh 'ssh-keyscan -H 192.168.64.134 >> ~/.ssh/authorized_keys'
                 sh '''ssh dima@192.168.64.134 << EOF
                         docker run -d -p 8081:8080 dimakhomchenko/jenkins_test:deploy'''
             }
