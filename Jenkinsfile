@@ -3,7 +3,12 @@ pipeline {
         registry = 'dimakhomchenko/jenkins_test'
         registryCredential = 'dockerhub'
     }
-    agent { dockerfile true }
+    agent { 
+        dockerfile {
+            filename 'Dockerfile'
+            args  args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' 
+        }
+    }
 
     stages {
         stage('git'){
