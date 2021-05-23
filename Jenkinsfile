@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registry = 'dimakhomchenko/jenkins_test'
+        registryCredential = 'dockerhub'
+    }
     agent { dockerfile true }
 
     stages {
@@ -7,9 +11,20 @@ pipeline {
                 git 'https://github.com/DimaKhomchenko/boxfuse.git'
             }
         }
-        stage('build'){
+        
+        stage('build webApp'){
             steps {
                 sh 'mvn package'
+            }
+        }
+
+        stage('build dockerImage'){
+            steps {
+                sh 'cp ./deploy/Dockerfile .'
+                script{
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
+                
             }
         }
     }
